@@ -15,7 +15,7 @@ matplotlib
 The generators of the mapping class group are called a, A, ..., d, D where a, b, c, d are the usual generators and the 
 capitalisation indicates inversion. 
 
-The curve on the surface is to be inputted as a word in x, X, y, Y, w, W, z, Z
+The curve on the surface is to be input as a word in x, X, y, Y, w, W, z, Z
 where these generators are as in the literature you gave me, and again capitalisation indicates inversion.
 
 To produce the dual unit ball, you will use the MCG_to_unitball function. This takes two arguments. The first is the surface
