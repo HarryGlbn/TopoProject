@@ -17,8 +17,8 @@ capitalisation indicates inversion.
 The curve on the surface is to be input as a word in x, X, y, Y, w, W, z, Z
 where these generators are as in the literature you gave me, and again capitalisation indicates inversion.
 
-To produce the dual unit ball, you will use the MCG_to_unitball function. This takes two arguments. The first is the element of the MCG that you want to use to deform your curve. Input this in the form [A, c, D] where this represents the word AcD in the MCG.
-The second is the surface curve that you want to deform. Input this in the form [x, y, X, Y] where this would represent the word xyXY.
+To produce the dual unit ball, you will use the MCG_to_unitball function. This takes two arguments. The first is the element of the MCG that you want to use to deform your curve. Input this in the form [A, c, D, ...] where this represents the word AcD in the MCG.
+The second is the surface curve that you want to deform. Input this in the form [x, y, X, Y, ...] where this would represent the word xyXY.
 
 
 To produce the MARKED dual unit ball, you use the DualWithMarked function. The inputs work the same way as before. The only 
