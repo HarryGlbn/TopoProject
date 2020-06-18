@@ -266,8 +266,8 @@ def MCG_to_unitball(L, gamma):
     return(DualUnitBall(DehnOnCurve(L, gamma)))
 
 def DualWithMarked(L, gamma):
-    verts = DehnOnCurve(L, gamma)
-    marked = DualMarkedVertices(verts)
+    verts = np.array(DehnOnCurve(L, gamma))
+    marked = np.array(DualMarkedVertices(verts))
     
     hull2 = ConvexHull(verts)
     plt.plot(verts[:, 0], verts[:,1], 'o')
