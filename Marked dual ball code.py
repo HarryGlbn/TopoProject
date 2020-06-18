@@ -26,6 +26,8 @@ def HullPlot(L):
 from sympy import symbols, Symbol
 x, y, z, w, X, Y, Z, W = symbols('x, y, z, w, X, Y, Z, W')
 
+#These coming functions a, b, ... C, D represent the standard generators of the MCG and their inverses
+
 def a(t):
     #input as a symbol
     if t == Symbol('x'):
