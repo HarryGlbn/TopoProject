@@ -7,6 +7,7 @@ from shapely.geometry import Polygon
 from shapely.geometry import MultiPoint, Point
 
 def WalkOnList(L):
+    #produces the walk determined by adding points together succesively
     length = len(L)
     pts = [(0,0)]
     for k in range(length):
@@ -14,6 +15,7 @@ def WalkOnList(L):
     return(pts)  
 
 def HullPlot(L):
+    #plots the convex hull of the walk above
     pts = WalkOnList(L)
     newpts = np.asarray(pts)
     hull = ConvexHull(newpts)
@@ -34,7 +36,7 @@ def a(t):
         return(t)
         
 def b(t):
-    #input as a Symbol
+    #input as a symbol
     if t == Symbol('z'):
         return (Symbol('x'), Symbol('z'))
     if t == Symbol('Z'):
@@ -127,6 +129,7 @@ def ListOp(f, L):
     return(l)
 
 def SlowReduce(word):
+    #reduces a word in the mapping class group only so far as killing elements and their inverses when next to one another
     x, y, z, w, X, Y, Z, W = symbols('x, y, z, w, X, Y, Z, W')
     kill_list = [(x, X), (y, Y), (z, Z), (w, W), (X, x), (Y, y), (W, w), (Z, z)]
     bad_indices = []
@@ -142,6 +145,7 @@ def SlowReduce(word):
     return(reduced_word)
 
 def CyclicReduce(word):
+    #continues on from SlowReduce to cyclically reduce the word
     x, y, z, w, X, Y, Z, W = symbols('x, y, z, w, X, Y, Z, W')
     kill_list = [(x, X), (y, Y), (z, Z), (w, W), (X, x), (Y, y), (W, w), (Z, z)]
     word = SlowReduce(word)
@@ -152,7 +156,8 @@ def CyclicReduce(word):
     return(word)
 
 def FullClean(word):
-    
+    #gets rid of unnecessary symbols in a word in the MCG for the purposes below. We can disregard the letters z,w,Z,W by...
+    #a result I proved
     x, y, z, w, X, Y, Z, W = symbols('x, y, z, w, X, Y, Z, W')
     word = [v for v in word if v == x or v == y or v == X or v == Y]
 
@@ -160,6 +165,7 @@ def FullClean(word):
     return(new_word)
 
 def map_to_vecs(word):
+    #maps a word in the MCG to their corresponding vectors as used by Thurston
     x, y, z, w, X, Y, Z, W = symbols('x, y, z, w, X, Y, Z, W')
     word = FullClean(word)
     list_of_vecs = []
@@ -176,6 +182,7 @@ def map_to_vecs(word):
     return(new_list)
 
 def ReduceList(L):
+   
     reduced_list = []
     for element in L:
         if isinstance(element, tuple):
@@ -186,29 +193,15 @@ def ReduceList(L):
     return reduced_list
 
 def DehnOnCurve(L, gamma):
-    
+    #gives reusult of action of a sequence of Dehn twists (given by a word in the MCG) on a curve on the surface
     for func in L[::-1]: 
         gamma = SlowReduce(ReduceList(ListOp(func, gamma)))
         print(gamma)
-    #gamma = FullClean(gamma)
     return(map_to_vecs(gamma))
 
-def WalkOnList(L):
-    length = len(L)
-    pts = [(0,0)]
-    for k in range(length):
-        pts.append(tuple(map(operator.add, pts[-1], L[k])))
-    return(pts)  
-
-def HullPlot(L):
-    pts = WalkOnList(L)
-    newpts = np.asarray(pts)
-    hull = ConvexHull(newpts)
-    plt.plot(newpts[:, 0], newpts[:,1], 'o')
-    for simplex in hull.simplices:
-            plt.plot(newpts[simplex, 0], newpts[simplex, 1], 'k-')
             
 def MarkedList(L):
+    #gives list of the marked vertices
     pts = WalkOnList(L)
     M = []
     for v in pts:
@@ -222,6 +215,7 @@ def MarkedList(L):
     
 
 def DualUnitBall(L):
+    #produces the dual unit ball for an element of the MCG
     pts = WalkOnList(L)
     newpts = np.asarray(pts)
     hull = ConvexHull(newpts)
@@ -248,10 +242,10 @@ def DualUnitBall(L):
                 MD.append(vertex + (0.5, -0.5))
             if poly.intersects(a6) and poly.intersects(a7):
                 MD.append(vertex + (-0.5, -0.5))
-    
     return(MD)
     
 def DualMarkedVertices(L):
+    #produces marked vertices for the DUAL unit ball for an element of the MCG
     DM = []
     marked = MarkedList(L)
     for v in DualUnitBall(L):
@@ -263,9 +257,11 @@ def DualMarkedVertices(L):
     return(DM)
 
 def MCG_to_unitball(L, gamma):
+    #produces the dual unit ball for the result of a sequence of Dehn twists on a surface curve
     return(DualUnitBall(DehnOnCurve(L, gamma)))
 
 def DualWithMarked(L, gamma):
+    #plots the marked dual unit ball for the result of a sequence of Dehn twists on a surface curve
     verts = np.array(DehnOnCurve(L, gamma))
     marked = np.array(DualMarkedVertices(verts))
     
