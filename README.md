@@ -11,7 +11,6 @@ shapely
 
 matplotlib
 
-.
 The generators of the mapping class group are called a, A, ..., d, D where a, b, c, d are the usual generators and the 
 capitalisation indicates inversion. 
 
@@ -23,6 +22,6 @@ The second is the surface curve that you want to deform. Input this in the form 
 
 
 To produce the MARKED dual unit ball, you use the DualWithMarked function. The inputs work the same way as before. The only 
-reason I have left the MCG_to_unitball function in is that it runs much faster for some large examples I tested. 
+reason I have left the MCG_to_unitball function in is that it runs much faster for some large examples I tested.
 
 
